@@ -8,13 +8,17 @@ import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Add
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -22,6 +26,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -30,6 +35,7 @@ import com.example.examen.ui.common.BottomBar
 import com.example.examen.ui.common.TopBar
 import com.example.examen.ui.pantallaAlumnos.AlumnosScreen
 import com.example.examen.ui.pantallaDetalleAlumnos.DetailAlumnoScreen
+import com.example.examen.ui.pantallaDetalleInforme.DetalleInformeScreen
 import com.example.examen.ui.pantallaInformes.InformesScreen
 import com.example.examen.ui.pantallaLogin.LoginScreen
 import com.example.examen.ui.pantallaRatones.RatonScreen
@@ -52,9 +58,7 @@ fun Navigation() {
     }
 
     Scaffold(
-        snackbarHost = {
-            SnackbarHost(hostState = snackbarHostState)
-        },
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopBar(
                 title = topBarTitle,
@@ -75,7 +79,6 @@ fun Navigation() {
             AnimatedVisibility(visible = isBottomFabVisible) {
                 FloatingActionButton(
                     onClick = {
-                        // Acción para agregar algo (puedes dejarlo vacío si no necesitas acción)
                     }
                 ) {
                     Icon(imageVector = Icons.Rounded.Add, contentDescription = null)
@@ -125,12 +128,19 @@ fun Navigation() {
                 DetailAlumnoScreen(showSnackbar, destination.name)
             }
 
+            composable<InformeDetalleDestination> { backStackEntry ->
+                val informeId = backStackEntry.arguments?.getInt("informeId")
+                informeId?.let {
+                    DetalleInformeScreen(showSnackbar, informeId = it)
+                } ?: Text("Informe no encontrado")
+            }
+
             composable<InformeDestination> {
                 topBarTitle = "Informes"
                 showBackButton = true
                 isBottomBarVisible = true
                 isBottomFabVisible = true
-                InformesScreen(showSnackbar = showSnackbar)
+                InformesScreen(showSnackbar = showSnackbar, navController = navController)
             }
         }
     }

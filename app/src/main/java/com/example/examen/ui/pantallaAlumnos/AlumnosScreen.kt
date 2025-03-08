@@ -52,8 +52,8 @@ fun AlumnosScreen(
         }
     }
 
-    ScreenContent(state = state, onClick = { playerId ->
-        viewModel.handleEvent(AlumnosEvent.AlumnoSelected(playerId))
+    ScreenContent(state = state, onClick = { alumnoId ->
+        viewModel.handleEvent(AlumnosEvent.AlumnoSelected(alumnoId))
     })
 }
 
@@ -116,7 +116,6 @@ fun AlumnosCard(alumno: Alumno, onAClick: () -> Unit) {
                     text = "apellido =" + alumno.apellido,
                     style = MaterialTheme.typography.bodyMedium
                 )
-
             }
         }
     }

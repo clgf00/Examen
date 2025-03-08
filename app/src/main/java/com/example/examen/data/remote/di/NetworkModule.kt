@@ -22,6 +22,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
+//esto es para lo que vaya con retrofit, para las cosas de ROOM usar Databasemodule
 object NetworkModule {
     @Provides
     fun provideHTTPLoggingInterceptor(): HttpLoggingInterceptor {
@@ -63,12 +64,6 @@ object NetworkModule {
     @Provides
     fun provideAlumnoService(retrofit: Retrofit): AlumnoService =
         retrofit.create(AlumnoService::class.java)
-
-    @Singleton
-    @Provides
-    fun provideInformeService(retrofit: Retrofit): InformeDao =
-        retrofit.create(InformeDao::class.java)
-
 
     @Provides
     @Singleton

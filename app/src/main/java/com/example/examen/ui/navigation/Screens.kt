@@ -19,6 +19,9 @@ data object HomeDestination
 data object InformeDestination
 
 @Serializable
+data class InformeDetalleDestination(val informeId: Int)
+
+@Serializable
 data class HomeDetails (val name :String)
 
 @Serializable

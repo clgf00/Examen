@@ -29,7 +29,12 @@ class InformeRepository @Inject constructor(
         informeDao.insertInforme(informe.toInformeEntity())
     }
 
-    suspend fun insertInformes(informes: List<Informe>) {
-        informeDao.insertInformes(informes.map { it.toInformeEntity() })
+    suspend fun getInformeById(informeId: Int): Informe? {
+        val informeEntity = informeDao.getInformeById(informeId)
+        return informeEntity?.toInforme()
+    }
+
+    suspend fun updateInforme(informe: Informe) {
+        informeDao.updateInforme(informe.toInformeEntity())
     }
 }

@@ -74,9 +74,7 @@ fun ADetailScreenContent(state: DetailAlumnoState) {
                         items(state.a.asignaturas){ ass ->
                             MiLazy(ass)
                         }
-
                     }
-
                 }
             }
         }
@@ -108,7 +106,6 @@ fun MiLazy(ass : Asignatura) {
                     text = "nota =" + ass.nota,
                     style = MaterialTheme.typography.bodyMedium
                 )
-
             }
         }
     }
