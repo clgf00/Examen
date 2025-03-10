@@ -8,7 +8,7 @@ import com.example.examen.ui.navigation.Navigation
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class ExamActivity : ComponentActivity() {
+class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

@@ -2,12 +2,13 @@ package com.example.examen.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.examen.data.remote.model.Informe
+import com.example.examen.common.Constantes
+import com.example.examen.data.local.model.Informe
 
-@Entity(tableName = "informes")
+@Entity(tableName = Constantes.INFORMES)
 data class InformeEntity(
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     val id: Int,
     val nombre: String,
     val rol: String

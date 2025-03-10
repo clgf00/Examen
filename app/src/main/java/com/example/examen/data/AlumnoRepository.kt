@@ -19,9 +19,5 @@ class AlumnoRepository @Inject constructor(
         } catch (e: Exception) {
             NetworkResult.Error(e.message ?: e.toString())
         }
-
-
     }
-
-
 }

@@ -6,5 +6,5 @@ import com.example.examen.ui.common.UiEvent
 data class RatonState(
     val aviso : UiEvent ?= null,
     val isLoading : Boolean = false,
-    val rat : List<Raton> = emptyList(),
+    val raton : List<Raton> = emptyList(),
 )

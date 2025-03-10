@@ -20,6 +20,8 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         buildConfigField("String", "API_URL", "\"http://192.168.1.247:8080\"")
+        /**
+         * aqui arriba poner el ipconfig y la ip del instituto. Seguramente el puerto sea el 8080 pero estar atenta por si lo cambia**/
         vectorDrawables {
             useSupportLibrary = true
         }

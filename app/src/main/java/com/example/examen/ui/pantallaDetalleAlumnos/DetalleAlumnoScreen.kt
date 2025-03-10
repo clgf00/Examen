@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
@@ -19,7 +20,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -32,27 +32,26 @@ import com.example.examen.ui.common.UiEvent
 @Composable
 fun DetailAlumnoScreen(
     showSnackbar: (String) -> Unit,
-    player: String,
-    viewModel: DetailAlumnoViewModel = hiltViewModel()
+    alumno: String,
+    viewModel: DetalleAlumnoViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    LaunchedEffect(player) {
-        viewModel.handleEvent(DetailAlumnoEvent.GetAlumno(player))
+    LaunchedEffect(alumno) {
+        viewModel.handleEvent(DetalleAlumnoEvent.GetAlumno(alumno))
     }
 
     LaunchedEffect(state.aviso) {
         state.aviso?.let {
             if (it is UiEvent.ShowSnackbar) {
                 showSnackbar(it.message)
-                viewModel.handleEvent(DetailAlumnoEvent.AvisoVisto)
+                viewModel.handleEvent(DetalleAlumnoEvent.AvisoVisto)
             }
         }
     }
     ADetailScreenContent(state = state)
 }
-
 @Composable
-fun ADetailScreenContent(state: DetailAlumnoState) {
+fun ADetailScreenContent(state: DetalleAlumnoState) {
     Surface {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -60,19 +59,22 @@ fun ADetailScreenContent(state: DetailAlumnoState) {
         ) {
             if (state.isLoading) {
                 CircularProgressIndicator()
-            } else if (state.a.asignaturas.isEmpty()) {
-                Text("No data asignaturas")
-            }else
-             {
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(8.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    LazyRow {
-                        items(state.a.asignaturas){ ass ->
-                            MiLazy(ass)
+            } else {
+                val asignaturas = state.alumno.asignaturas ?: emptyList()
+
+                if (asignaturas.isEmpty()) {
+                    Text("No hay asignaturas guardadas")
+                } else {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(8.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        LazyRow {
+                            items(asignaturas) { ass ->
+                                MiLazy(ass)
+                            }
                         }
                     }
                 }
@@ -81,8 +83,9 @@ fun ADetailScreenContent(state: DetailAlumnoState) {
     }
 }
 
+
 @Composable
-fun MiLazy(ass : Asignatura) {
+fun MiLazy(subject : Asignatura) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -98,12 +101,12 @@ fun MiLazy(ass : Asignatura) {
         ) {
             Column {
                 Text(
-                    text = ass.nombre,
+                    text = subject.nombre,
                     style = MaterialTheme.typography.bodyLarge
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "nota =" + ass.nota,
+                    text = "Nota = " + subject.nota,
                     style = MaterialTheme.typography.bodyMedium
                 )
             }

@@ -1,6 +1,5 @@
 package com.example.examen.data.remote.utils
 
-
 import com.google.gson.annotations.SerializedName
 
 data class AuthenticationResponse(

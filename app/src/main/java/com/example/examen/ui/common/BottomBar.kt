@@ -1,9 +1,6 @@
 package com.example.examen.ui.common
 
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -19,7 +16,9 @@ fun BottomBar(
     navController: NavController,
     items: List<BottomNavItem>
 ) {
-    NavigationBar {
+    NavigationBar(
+        containerColor = MaterialTheme.colorScheme.primary // Color de fondo del BottomBar
+    ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentDestination = navBackStackEntry?.destination
 
@@ -34,7 +33,6 @@ fun BottomBar(
                             popUpTo(navController.graph.findStartDestination().id) {
                                 saveState = true
                             }
-
                             launchSingleTop = true
                             restoreState = true
                         }
@@ -42,7 +40,6 @@ fun BottomBar(
                             popUpTo(navController.graph.findStartDestination().id) {
                                 saveState = true
                             }
-
                             launchSingleTop = true
                             restoreState = true
                         }
@@ -50,16 +47,22 @@ fun BottomBar(
                             popUpTo(navController.graph.findStartDestination().id) {
                                 saveState = true
                             }
-
                             launchSingleTop = true
                             restoreState = true
                         }
                     }
-                }
+                },
+                colors = NavigationBarItemDefaults.colors(
+                    selectedIconColor = MaterialTheme.colorScheme.onPrimary,
+                    unselectedIconColor = MaterialTheme.colorScheme.onSurface,
+                    selectedTextColor = MaterialTheme.colorScheme.onPrimary,
+                    unselectedTextColor = MaterialTheme.colorScheme.onSurface
+                )
             )
         }
     }
 }
+
 
 
 data class BottomNavItem(

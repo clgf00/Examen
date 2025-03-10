@@ -23,8 +23,8 @@ class RatonViewModel @Inject constructor(private val getRatones: GetRatones,
     fun handleEvent(ratonEvent: RatonEvent) {
         when (ratonEvent) {
             is RatonEvent.AvisoVisto -> avisoVisto()
-            is RatonEvent.GetRats -> getRatones()
-            is RatonEvent.AddRat -> addRaton(ratonEvent.name)
+            is RatonEvent.GetRatones -> getRatones()
+            is RatonEvent.AddRaton -> addRaton(ratonEvent.name)
         }
     }
 
@@ -37,7 +37,7 @@ class RatonViewModel @Inject constructor(private val getRatones: GetRatones,
             _uiState.update { it.copy(isLoading = true) }
             when (val result = getRatones.invoke()) {
                 is NetworkResult.Success -> {
-                    _uiState.update { it.copy(rat = result.data, isLoading = false) }
+                    _uiState.update { it.copy(raton = result.data, isLoading = false) }
                 }
 
                 is NetworkResult.Error -> {

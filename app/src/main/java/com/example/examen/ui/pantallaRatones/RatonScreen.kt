@@ -28,12 +28,13 @@ import com.example.examen.ui.common.UiEvent
 @Composable
 fun RatonScreen(
     showSnackbar: (String) -> Unit,
-    viewModel: RatonViewModel = hiltViewModel()
+    viewModel: RatonViewModel = hiltViewModel(),
+    onBackClick: () -> Unit // <-- Agregamos este parámetro para manejar la navegación de regreso
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit) {
-        viewModel.handleEvent(RatonEvent.GetRats)
+        viewModel.handleEvent(RatonEvent.GetRatones)
     }
 
     LaunchedEffect(state.aviso) {
@@ -46,6 +47,7 @@ fun RatonScreen(
     }
 
     var username by remember { mutableStateOf("") }
+
     Surface {
         Box(modifier = Modifier.fillMaxSize()) {
             when {
@@ -55,19 +57,17 @@ fun RatonScreen(
                     )
                 }
 
-                state.rat.isEmpty() -> {
+                state.raton.isEmpty() -> {
                     Text(
-                        "No hay ratas",
+                        "No hay ratones",
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
 
                 else -> {
                     LazyColumn {
-                        items(state.rat) { player ->
-                            RatasCard(
-                                rat = player,
-                            )
+                        items(state.raton) { player ->
+                            Ratones(raton = player)
                         }
                     }
                 }
@@ -80,29 +80,38 @@ fun RatonScreen(
                 .padding(16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
-        ){
+        ) {
             OutlinedTextField(
                 value = username,
                 onValueChange = { username = it },
-                label = { Text("Name") },
+                label = { Text("Nombre") },
                 modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(16.dp))
             Button(
-                onClick = { viewModel.handleEvent(RatonEvent.AddRat(username)) },
+                onClick = { viewModel.handleEvent(RatonEvent.AddRaton(username)) },
                 modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Agregar")
             }
+
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = onBackClick,
+                modifier = Modifier.fillMaxWidth(),
+                colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.secondary)
+            ) {
+                Text("Volver a Alumnos")
+            }
         }
     }
-
 }
 
 
 
+
 @Composable
-fun RatasCard(rat: Raton) {
+fun Ratones(raton: Raton) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -117,12 +126,10 @@ fun RatasCard(rat: Raton) {
         ) {
             Column {
                 Text(
-                    text = rat.nombre,
+                    text = raton.nombre,
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
         }
-
-
     }
 }

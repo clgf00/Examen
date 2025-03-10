@@ -1,6 +1,6 @@
 package com.example.examen.ui.pantallaDetalleInforme
 
-import com.example.examen.data.remote.model.Informe
+import com.example.examen.data.local.model.Informe
 
 data class DetalleInformeState(
     val informe: Informe? = null,

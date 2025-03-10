@@ -2,7 +2,7 @@ package com.example.examen.domain.usecases
 
 import com.example.examen.data.InformeRepository
 import com.example.examen.data.remote.NetworkResult
-import com.example.examen.data.remote.model.Informe
+import com.example.examen.data.local.model.Informe
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 

@@ -3,7 +3,7 @@ package com.example.examen.ui.pantallaInformes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.examen.data.remote.NetworkResult
-import com.example.examen.data.remote.model.Informe
+import com.example.examen.data.local.model.Informe
 import com.example.examen.di.IoDispatcher
 import com.example.examen.domain.usecases.AddInforme
 import com.example.examen.domain.usecases.GetInformes
@@ -28,7 +28,6 @@ class InformesViewModel @Inject constructor(
 
     private val _state = MutableStateFlow(InformesState())
     val state: StateFlow<InformesState> = _state.asStateFlow()
-
     fun handleEvent(event: InformeEvent) {
         when (event) {
             is InformeEvent.GetInformes -> getInformes()
@@ -61,7 +60,7 @@ class InformesViewModel @Inject constructor(
         }
     }
 
-    fun insertInforme(informe: Informe) {
+    private fun insertInforme(informe: Informe) {
         viewModelScope.launch {
             insertInformeUseCase(informe)
         }

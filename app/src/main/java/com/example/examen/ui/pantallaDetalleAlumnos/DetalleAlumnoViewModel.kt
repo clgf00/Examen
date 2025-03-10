@@ -13,13 +13,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailAlumnoViewModel @Inject constructor(private val getAlumnos: GetAlumnos) : ViewModel() {
-    private val _uiState = MutableStateFlow(DetailAlumnoState())
+class DetalleAlumnoViewModel @Inject constructor(private val getAlumnos: GetAlumnos) : ViewModel() {
+    private val _uiState = MutableStateFlow(DetalleAlumnoState())
     val uiState = _uiState.asStateFlow()
-    fun handleEvent(event: DetailAlumnoEvent) {
+    fun handleEvent(event: DetalleAlumnoEvent) {
         when (event) {
-            is DetailAlumnoEvent.AvisoVisto -> avisoVisto()
-            is DetailAlumnoEvent.GetAlumno -> getAlumno(event.name)
+            is DetalleAlumnoEvent.AvisoVisto -> avisoVisto()
+            is DetalleAlumnoEvent.GetAlumno -> getAlumno(event.name)
         }
     }
 
@@ -34,7 +34,7 @@ class DetailAlumnoViewModel @Inject constructor(private val getAlumnos: GetAlumn
                 is NetworkResult.Success -> {
                     val record = result.data.find { it.nombre == name }
                     record?.let {
-                        _uiState.update { it.copy(a = record, isLoading = false) }
+                        _uiState.update { it.copy(alumno = record, isLoading = false) }
                     }
 
                 }

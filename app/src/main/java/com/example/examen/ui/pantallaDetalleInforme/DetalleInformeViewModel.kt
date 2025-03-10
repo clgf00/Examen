@@ -2,7 +2,8 @@ package com.example.examen.ui.pantallaDetalleInforme
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.examen.data.remote.model.Informe
+import com.example.examen.common.Constantes
+import com.example.examen.data.local.model.Informe
 import com.example.examen.domain.usecases.GetInforme
 import com.example.examen.domain.usecases.UpdateInforme
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,6 @@ class DetalleInformeViewModel @Inject constructor(
     private val getInformeUseCase: GetInforme,
     private val updateInformeUseCase: UpdateInforme
 ) : ViewModel() {
-
     private val _state = MutableStateFlow(DetalleInformeState())
     val state: StateFlow<DetalleInformeState> = _state.asStateFlow()
 
@@ -35,7 +35,7 @@ class DetalleInformeViewModel @Inject constructor(
                 val informe = getInformeUseCase(informeId)
                 _state.value = _state.value.copy(informe = informe, isLoading = false)
             } catch (e: Exception) {
-                _state.value = _state.value.copy(isLoading = false, error = "Error al obtener informe")
+                _state.value = _state.value.copy(isLoading = false, error = Constantes.INFORME_ERROR)
             }
         }
     }
@@ -45,9 +45,9 @@ class DetalleInformeViewModel @Inject constructor(
             _state.value = _state.value.copy(isLoading = true)
             try {
                 updateInformeUseCase(informe)
-                _state.value = _state.value.copy(isLoading = false)
+                _state.value = _state.value.copy(isLoading = false, informe = informe)
             } catch (e: Exception) {
-                _state.value = _state.value.copy(isLoading = false, error = "Error al actualizar informe")
+                _state.value = _state.value.copy(isLoading = false, error = Constantes.ACTUALIZAR_ERROR)
             }
         }
     }

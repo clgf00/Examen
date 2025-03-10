@@ -4,7 +4,7 @@ import com.example.examen.data.local.InformeDao
 import com.example.examen.data.local.toInforme
 import com.example.examen.data.local.toInformeEntity
 import com.example.examen.data.remote.NetworkResult
-import com.example.examen.data.remote.model.Informe
+import com.example.examen.data.local.model.Informe
 import com.example.examen.di.IoDispatcher
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow

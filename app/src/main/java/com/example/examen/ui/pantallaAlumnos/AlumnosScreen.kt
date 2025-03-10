@@ -22,6 +22,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -59,7 +60,7 @@ fun AlumnosScreen(
 
 @Composable
 fun ScreenContent(state: AlumnosState, onClick: (String) -> Unit = {}) {
-    Surface {
+    Surface(color = MaterialTheme.colorScheme.background) {
         Box(modifier = Modifier.fillMaxSize()) {
             when {
                 state.isLoading -> {
@@ -113,7 +114,7 @@ fun AlumnosCard(alumno: Alumno, onAClick: () -> Unit) {
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "apellido =" + alumno.apellido,
+                    text = alumno.apellido,
                     style = MaterialTheme.typography.bodyMedium
                 )
             }

@@ -14,19 +14,17 @@ class RatonRepository @Inject constructor(
     @IoDispatcher private val dispatcher: CoroutineDispatcher
 
 ) : BaseApiResponse() {
-    suspend fun getRat() = withContext(dispatcher) {
+    suspend fun getRatones() = withContext(dispatcher) {
         try {
-            safeApiCall { ratonService.getRat() }
+            safeApiCall { ratonService.getRatones() }
         } catch (e: Exception) {
             NetworkResult.Error(e.message ?: e.toString())
         }
-
-
     }
 
-    suspend fun addRat(raton:Raton) = withContext(dispatcher){
+    suspend fun addRaton(raton:Raton) = withContext(dispatcher){
         try {
-            safeApiCall { ratonService.addRat(raton) }
+            safeApiCall { ratonService.addRaton(raton) }
         } catch (e: Exception) {
             NetworkResult.Error(e.message ?: e.toString())
         }

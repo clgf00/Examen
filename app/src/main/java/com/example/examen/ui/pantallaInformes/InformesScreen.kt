@@ -26,11 +26,11 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
-import com.example.examen.data.remote.model.Informe
+import com.example.examen.data.local.model.Informe
+import com.example.examen.ui.navigation.DetalleInformeDestination
 
 @Composable
 fun InformesScreen(
-    showSnackbar: (String) -> Unit,
     viewModel: InformesViewModel = hiltViewModel(),
     navController: NavController
 ) {
@@ -41,7 +41,9 @@ fun InformesScreen(
         viewModel.handleEvent(InformeEvent.GetInformes)
     }
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(16.dp)) {
         Text("Lista de Informes", style = MaterialTheme.typography.headlineSmall)
         Spacer(modifier = Modifier.height(8.dp))
 
@@ -50,14 +52,14 @@ fun InformesScreen(
         ) {
             items(state.informes) { informe ->
                 InformeCard(informe = informe) { selectedInforme ->
-                    // Navigate to the "detalle informe" screen when a card is clicked
-                    navController.navigate("detalleinforme/${selectedInforme.id}")
+                    navController.navigate(DetalleInformeDestination.createRoute(selectedInforme.id)) {
+                        launchSingleTop = true
+                    }
                 }
             }
         }
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Input for new Informe
         OutlinedTextField(
             value = nuevoInforme,
             onValueChange = { nuevoInforme = it },
@@ -66,12 +68,17 @@ fun InformesScreen(
         )
         Spacer(modifier = Modifier.height(8.dp))
 
-        // Add button for new Informe
         Button(
             onClick = {
                 if (nuevoInforme.isNotBlank()) {
                     viewModel.handleEvent(
-                        InformeEvent.InsertInforme(Informe(id = 0, nombre = nuevoInforme, nivel = (1..3).random().toString()))
+                        InformeEvent.InsertInforme(
+                            Informe(
+                                id = 0,
+                                nombre = nuevoInforme,
+                                nivel = (1..3).random().toString()
+                            )
+                        )
                     )
                     nuevoInforme = ""
                 }

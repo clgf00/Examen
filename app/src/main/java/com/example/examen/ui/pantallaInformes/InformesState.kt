@@ -1,6 +1,6 @@
 package com.example.examen.ui.pantallaInformes
 
-import com.example.examen.data.remote.model.Informe
+import com.example.examen.data.local.model.Informe
 
 data class InformesState (
     val informes: List<Informe> = emptyList(),

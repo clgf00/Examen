@@ -19,10 +19,15 @@ data object HomeDestination
 data object InformeDestination
 
 @Serializable
-data class InformeDetalleDestination(val informeId: Int)
+data class NotasDestination (val name :String)
 
 @Serializable
-data class HomeDetails (val name :String)
+data class DetalleInformeDestination(val id: Int) {
+    companion object {
+        const val ROUTE = "detalleinforme/{informeId}"
+        fun createRoute(informeId: Int) = "detalleinforme/$informeId"
+    }
+}
 
 @Serializable
 data object RatonesDestination

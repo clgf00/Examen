@@ -6,5 +6,5 @@ import javax.inject.Inject
 
 class AddRaton @Inject constructor(private val ratonRepository: RatonRepository) {
     suspend operator fun invoke(raton:Raton) =
-        ratonRepository.addRat(raton)
+        ratonRepository.addRaton(raton)
 }

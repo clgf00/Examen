@@ -1,4 +1,4 @@
-package com.example.examen.data
+package com.example.examen.data.remote.utils
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
@@ -10,14 +10,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class PreferencesRepository @Inject constructor(private val dataStore: DataStore<Preferences>) {
+class TokenManager @Inject constructor(private val dataStore: DataStore<Preferences>) {
     companion object {
         private val ACCESS_TOKEN_KEY = stringPreferencesKey("accessToken")
     }
 
-    val token: Flow<String?> = dataStore.data.map { preferences ->
-        preferences[ACCESS_TOKEN_KEY]
-    }
 
     suspend fun saveTokens(accessToken: String) {
         dataStore.edit { preferences ->
@@ -25,9 +22,14 @@ class PreferencesRepository @Inject constructor(private val dataStore: DataStore
         }
     }
 
-    suspend fun clearTokens() {
+    val token: Flow<String?> = dataStore.data.map { preferences ->
+        preferences[ACCESS_TOKEN_KEY]
+    }
+
+    suspend fun deleteTokens() {
         dataStore.edit { preferences ->
             preferences.remove(ACCESS_TOKEN_KEY)
         }
     }
+
 }

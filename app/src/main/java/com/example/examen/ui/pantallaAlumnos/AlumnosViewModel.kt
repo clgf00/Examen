@@ -46,8 +46,6 @@ fun handleEvent (event : AlumnosEvent){
                 }
             }
         }
-
-
     }
 
     private fun selectAlumno(name: String) {

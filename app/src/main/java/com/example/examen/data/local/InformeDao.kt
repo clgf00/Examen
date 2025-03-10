@@ -5,13 +5,14 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.example.examen.common.Constantes
 
 @Dao
 interface InformeDao {
-    @Query("SELECT * FROM informes")
+    @Query(Constantes.QUERY_INFORMES)
     fun getAll(): List<InformeEntity>
 
-    @Query("SELECT * FROM informes WHERE id = :informeId")
+    @Query(Constantes.QUERY_INFORMES2)
     suspend fun getInformeById(informeId: Int): InformeEntity?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
